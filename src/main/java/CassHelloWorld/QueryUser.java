@@ -10,7 +10,7 @@ public class QueryUser {
 
 	public static void main(String[] args) {
 		CassandraConnection conn = new CassandraConnection();
-		conn.connect("192.168.0.100", "cassdba", "flynnLives");
+		conn.connect("192.168.0.100", "cassdba", "flynnLives","ClockworkAngels");
 		Session session = conn.getSession();
 
 		String userID = System.getProperty("user.name");

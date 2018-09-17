@@ -7,7 +7,7 @@ public class CassHelloWorld {
 
 	public static void main(String[] args) {
 		CassandraConnection conn = new CassandraConnection();
-		conn.connect("192.168.0.101", "cassdba", "flynnLives");
+		conn.connect("192.168.0.101", "cassdba", "flynnLives", "ClockworkAngels");
 		
 		String strSELECT ="SELECT cluster_name,data_center,"
                    + "listen_address,release_version,dateof(now()) "

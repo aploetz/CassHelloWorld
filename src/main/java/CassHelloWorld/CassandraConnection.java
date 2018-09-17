@@ -14,18 +14,18 @@ public class CassandraConnection {
     public CassandraConnection() {	
     }
 	
-    public CassandraConnection(String node, String user, String pwd) {
-      connect(node,user,pwd);
+    public CassandraConnection(String node, String user, String pwd, String dc) {
+      connect(node,user,pwd,dc);
     }
     
-    public void connect(String node, String user, String pwd) {
+    public void connect(String node, String user, String pwd, String dc) {
       cluster = Cluster.builder()
         .addContactPoint(node)
         .withCredentials(user,pwd)
         .withLoadBalancingPolicy(
        		new TokenAwarePolicy(
        				DCAwareRoundRobinPolicy.builder()
-       				.withLocalDc("ClockworkAngels")
+       				.withLocalDc(dc)
        				.build()
         		))
         .build();
