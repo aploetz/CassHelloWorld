@@ -6,6 +6,8 @@ import com.datastax.driver.core.policies.DCAwareRoundRobinPolicy;
 import com.datastax.driver.core.policies.TokenAwarePolicy;
 import com.datastax.driver.core.ResultSet;
 import com.datastax.driver.core.BoundStatement;
+import com.datastax.driver.core.QueryOptions;
+import com.datastax.driver.core.ConsistencyLevel;
 	
 public class CassandraConnection {
 	private Cluster cluster;
@@ -19,15 +21,19 @@ public class CassandraConnection {
     }
     
     public void connect(String node, String user, String pwd, String dc) {
+      QueryOptions qo = new QueryOptions();
+      qo.setConsistencyLevel(ConsistencyLevel.LOCAL_QUORUM);
+      
       cluster = Cluster.builder()
         .addContactPoint(node)
         .withCredentials(user,pwd)
+        .withQueryOptions(qo)
         .withLoadBalancingPolicy(
-       		new TokenAwarePolicy(
-       				DCAwareRoundRobinPolicy.builder()
-       				.withLocalDc(dc)
-       				.build()
-        		))
+          new TokenAwarePolicy(
+       	    DCAwareRoundRobinPolicy.builder()
+       		.withLocalDc(dc)
+       		.build()
+        ))
         .build();
       session = cluster.connect();
     }

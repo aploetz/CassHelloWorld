@@ -12,9 +12,9 @@ public class CassHelloWorld {
 		String strSELECT ="SELECT cluster_name,data_center,"
                    + "listen_address,release_version,dateof(now()) "
 				   + "FROM system.local WHERE key='local'";
+		ResultSet rows = conn.query(strSELECT);
 		
 		System.out.println("Hello from:");
-		ResultSet rows = conn.query(strSELECT);
 		for (Row row : rows) {
 		    System.out.print(
                   row.getString("cluster_name") + " " +
